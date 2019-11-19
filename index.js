@@ -1,8 +1,23 @@
 const readline = require('readline');
+const clipboardy = require('clipboardy');
+const path = require('path');
+
 process.stdin.setEncoding('utf-8');
-console.log("input is a TTY?", process.stdin.isTTY);
+
+const length = Number(process.argv[2]) || 80;
 
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
+
+console.log(`usage: ${path.basename(process.argv[0])} ${path.basename(process.argv[1])} [example] [length]`);
+
+if (process.argv[2] === 'example') {
+  console.log('example usage: ');
+  console.log('input: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non fringilla tellus. Sed malesuada dui in viverra auctor.');
+  console.log(`output:
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non fringill' +
+'a tellus. Sed malesuada dui in viverra auctor.'`);
+  process.exit(0);
+}
 
 rl.setPrompt('> ');
 rl.prompt();
@@ -10,44 +25,30 @@ rl.prompt();
 let input = '';
 
 rl.on('line', function (line) {
-  input += line;
+  const trimmed = line.trim();
+  if (trimmed.length !== 0) {
+    input += trimmed + ' ';
+  }
   rl.prompt();
 });
 
 rl.on('close', function () {
-  const processed = processInput(input);
-  console.log('PROCESSED:', processed);
+  const processed = splitJs(input, length);
+  console.log('\n' + processed);
+  console.log('And copied to clipboard');
+  clipboardy.writeSync(processed);
 });
 
-function processInput(input) {
-  const splitOn = 80 - 5;
+function splitJs(input, length) {
+  const splitOn = length - 4;
   let i = 0;
 
-  return input
-    .trim()
-    .split('')
-    .map((letter => {
-      if (letter === '\'') {
-        return '\\\'';
-      }
-      return letter;
-    }))
-    .map((letter, index, self) => {
-      let ret;
+  String.re
 
-      if (index === 0) {
-        ret = '\'' + letter;
-      } else if (i === splitOn) {
-        ret = letter + '\' + \n\'';
-        i = 0;
-      } else {
-        ret = letter;
-      }
-      if (index === self.length - 1) {
-        ret += '\'';
-      }
-      ++i;
-      return ret;
-    })
-    .join('');
+  const processed = input
+    .trim()
+    .replace(/'/g, '\\\'')
+    .replace(new RegExp(`(.{1,${splitOn}})`, 'g'), '\'$1\' +\n');
+
+  return processed.substring(0, processed.length - 3);
 }
