@@ -16,7 +16,7 @@
   "license": "MIT",
   "main": "./index",
   "bin": {
-    "splitjs": "./index.js"
+    "stojs": "./index.js"
   },
   "files": [
     "index.js"
