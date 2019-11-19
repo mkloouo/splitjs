@@ -3,7 +3,7 @@ const readline = require('readline');
 const clipboardy = require('clipboardy');
 const optimist = require('optimist');
 const argv = optimist
-  .usage('usage: $0 [-h|--help] [-e|--example] [-l|--length length]\n\n' +
+  .usage('usage: npx stojs [-h|--help] [-e|--example] [-l|--length length]\n\n' +
     'Enter text and finish with Ctrl + D (on Windows) to get your splitted result.')
   .options({
     'h': {
@@ -30,7 +30,7 @@ const argv = optimist
   })
   .argv;
 
-if (argv.h) {
+if (argv.h) {``
   displayHelp();
 } else if (argv.e) {
   displayExampleUsage();
