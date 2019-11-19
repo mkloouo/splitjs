@@ -1,14 +1,30 @@
 {
   "name": "splitjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Splitting string into more JS-compliant",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "keywords": [
+    "js",
+    "string",
+    "split"
+  ],
+  "homepage": "https://github.com/mkloouo/splitjs",
+  "author": {
+    "name": "Mykola Odnosumov",
+    "email": "mkloouo@gmail.com",
+    "url": "https://github.com/mkloouo/"
   },
-  "author": "Mykola Odnosumov <mkloouo@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
+  "main": "./index",
+  "bin": {
+    "splitjs": "./index.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mkloouo/splitjs"
+  },
   "dependencies": {
     "clipboardy": "~2.1.0"
   }
