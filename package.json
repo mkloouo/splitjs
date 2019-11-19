@@ -1,13 +1,13 @@
 {
-  "name": "splitjs",
-  "version": "1.0.3",
+  "name": "stojs",
+  "version": "1.0.4",
   "description": "Splitting string into more JS-compliant",
   "keywords": [
     "js",
     "string",
     "split"
   ],
-  "homepage": "https://github.com/mkloouo/splitjs",
+  "homepage": "https://github.com/mkloouo/stojs",
   "author": {
     "name": "Mykola Odnosumov",
     "email": "mkloouo@gmail.com",
@@ -23,7 +23,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mkloouo/splitjs"
+    "url": "https://github.com/mkloouo/stojs"
   },
   "dependencies": {
     "clipboardy": "~2.1.0"
