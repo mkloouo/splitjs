@@ -1,3 +1,8 @@
+/**
+ * @author Mykola Odnosumov 
+ * @version 1.0.0
+ */
+
 const readline = require('readline');
 const clipboardy = require('clipboardy');
 const path = require('path');
@@ -34,8 +39,8 @@ rl.on('line', function (line) {
 
 rl.on('close', function () {
   const processed = splitJs(input, length);
-  console.log('\n' + processed);
-  console.log('And copied to clipboard');
+  console.log('Result\n' + processed);
+  console.log('> Also copied to clipboard');
   clipboardy.writeSync(processed);
 });
 

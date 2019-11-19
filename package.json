@@ -1,14 +1,15 @@
 {
   "name": "splitjs",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Splitting string into more JS-compliant",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Mykola Odnosumov <mkloouo@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "clipboardy": "^2.1.0"
+    "clipboardy": "~2.1.0"
   }
 }
