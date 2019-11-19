@@ -1,46 +1,85 @@
 #!/usr/bin/env node
 const readline = require('readline');
 const clipboardy = require('clipboardy');
-const path = require('path');
+const optimist = require('optimist');
+const argv = optimist
+  .usage('usage: $0 [-h|--help] [-e|--example] [-l|--length length]\n\n' +
+    'Enter text and finish with Ctrl + D (on Windows) to get your splitted result.')
+  .options({
+    'h': {
+      alias: 'help',
+      describe: 'Show this help message',
+      type: 'boolean'
+    },
+    'e': {
+      alias: 'example',
+      describe: 'Display example usage',
+      type: 'boolean'
+    },
+    'l': {
+      alias: 'length',
+      default: 80,
+      describe: 'Select split length (at least 5)',
+      type: 'number'
+    }
+  })
+  .check((argv) => {
+    if (Number(argv.l) < 5) {
+      throw new Error('Length should be at least 5');
+    }
+  })
+  .argv;
 
-process.stdin.setEncoding('utf-8');
-
-const length = Number(process.argv[2]) || 80;
-
-const rl = readline.createInterface({input: process.stdin, output: process.stdout});
-
-console.log(`usage: ${path.basename(process.argv[0])} ${path.basename(process.argv[1])} [example] [length]`);
-
-if (process.argv[2] === 'example') {
-  console.log('example usage: ');
-  console.log('input: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non fringilla tellus. Sed malesuada dui in viverra auctor.');
-  console.log(`output:
-'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non fringill' +
-'a tellus. Sed malesuada dui in viverra auctor.'`);
-  process.exit(0);
+if (argv.h) {
+  displayHelp();
+} else if (argv.e) {
+  displayExampleUsage();
+} else {
+  processInput(argv.l);
 }
 
-rl.setPrompt('> ');
-rl.prompt();
+function displayHelp() {
+  optimist.showHelp();
+}
 
-let input = '';
+function displayExampleUsage() {
+  console.log('example usage: ');
+  console.log(`> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non fringilla tellus. Sed malesuada dui in viverra auctor.
+> # Ctrl + D pressed
+> Result
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non fringill' +
+'a tellus. Sed malesuada dui in viverra auctor.'
+> Also copied to clipboard`);
+}
 
-rl.on('line', function (line) {
-  const trimmed = line.trim();
-  if (trimmed.length !== 0) {
-    input += trimmed + ' ';
-  }
+function processInput(argvLength) {
+  process.stdin.setEncoding('utf-8');
+  const length = Number(argvLength);
+
+  const rl = readline.createInterface({input: process.stdin, output: process.stdout});
+
+  rl.setPrompt('> ');
   rl.prompt();
-});
 
-rl.on('close', function () {
-  const processed = splitJs(input, length);
-  console.log('Result\n' + processed);
-  console.log('> Also copied to clipboard');
-  clipboardy.writeSync(processed);
-});
+  let input = '';
 
-function splitJs(input, length) {
+  rl.on('line', function (line) {
+    const trimmed = line.trim();
+    if (trimmed.length !== 0) {
+      input += trimmed + ' ';
+    }
+    rl.prompt();
+  });
+
+  rl.on('close', function () {
+    const processed = split(input, length);
+    console.log('Result\n' + processed);
+    console.log('> Also copied to clipboard');
+    clipboardy.writeSync(processed);
+  });
+}
+
+function split(input, length) {
   const splitOn = length - 4;
   let i = 0;
 

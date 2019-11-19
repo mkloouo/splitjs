@@ -1,6 +1,6 @@
 {
   "name": "stojs",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Splitting string into more JS-compliant",
   "keywords": [
     "js",
@@ -26,7 +26,8 @@
     "url": "https://github.com/mkloouo/stojs"
   },
   "dependencies": {
-    "clipboardy": "~2.1.0"
+    "clipboardy": "~2.1.0",
+    "optimist": "~0.6.1"
   },
   "preferGlobal": true
 }
