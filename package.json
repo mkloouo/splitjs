@@ -1,6 +1,6 @@
 {
   "name": "splitjs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Splitting string into more JS-compliant",
   "main": "index.js",
   "scripts": {
