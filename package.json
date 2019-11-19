@@ -27,5 +27,6 @@
   },
   "dependencies": {
     "clipboardy": "~2.1.0"
-  }
+  },
+  "preferGlobal": true
 }
