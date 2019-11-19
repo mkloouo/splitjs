@@ -1,8 +1,4 @@
-/**
- * @author Mykola Odnosumov 
- * @version 1.0.0
- */
-
+#!/usr/bin/env node
 const readline = require('readline');
 const clipboardy = require('clipboardy');
 const path = require('path');
