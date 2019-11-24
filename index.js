@@ -33,7 +33,7 @@ const argv = optimist
     if (Number(argv.l) < 5) {
       throw new Error('Length should be at least 5');
     }
-    if (!fs.existsSync(argv.f) || !fs.statSync(argv.f).isFile()) {
+    if (argv.f && (!fs.existsSync(argv.f) || !fs.statSync(argv.f).isFile())) {
       throw new Error('File does not exists or is not file');
     }
   })
