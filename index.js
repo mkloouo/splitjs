@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const fs = require('fs');
 const readline = require('readline');
 const clipboardy = require('clipboardy');
 const optimist = require('optimist');
@@ -21,21 +22,32 @@ const argv = optimist
       default: 80,
       describe: 'Select split length (at least 5)',
       type: 'number'
+    },
+    'f': {
+      alias: 'file',
+      describe: 'Select file to read from',
+      type: 'string'
     }
   })
   .check((argv) => {
     if (Number(argv.l) < 5) {
       throw new Error('Length should be at least 5');
     }
+    if (!fs.existsSync(argv.f) || !fs.statSync(argv.f).isFile()) {
+      throw new Error('File does not exists or is not file');
+    }
   })
   .argv;
 
-if (argv.h) {``
+if (argv.h) {
+  ``
   displayHelp();
 } else if (argv.e) {
   displayExampleUsage();
+} else if (argv.f) {
+  processFile(argv.f);
 } else {
-  processInput(argv.l);
+  processInput();
 }
 
 function displayHelp() {
@@ -52,9 +64,20 @@ function displayExampleUsage() {
 > Also copied to clipboard`);
 }
 
-function processInput(argvLength) {
+function processFile(fileName) {
+  const length = Number(argv.l);
+
+  const fileContents = fs.readFileSync(fileName, 'utf-8');
+  const processed = split(fileContents, length);
+
+  console.log('Result\n' + processed);
+  console.log('> Also copied to clipboard');
+  clipboardy.writeSync(processed);
+}
+
+function processInput() {
   process.stdin.setEncoding('utf-8');
-  const length = Number(argvLength);
+  const length = Number(argv.l);
 
   const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
